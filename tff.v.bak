@@ -1,0 +1,36 @@
+module tff(t, clk, q, qb);
+input t , clk ;
+output q, qb;
+reg q, qb;
+always @(posedge clk)
+begin
+if (t==1'b0)
+begin
+q = q; qb = qb;
+end
+else
+begin
+q = ~q; qb = ~qb;
+end
+end
+endmodule
+
+module tff_tb;
+    reg t1,clk1;
+    wire q1 , qb1;
+    tff dut (.t(t1),.clk(clk1),.q(q1),.qb(qb1));
+    initial
+    begin
+    clk1=1'b0;
+    end
+    always #3 clk1=~clk1;
+    always #5 t1=~t1;
+        always 
+        #5 $display ($time," clk1=%b t1=%b q1=%b qb1=%b",$time,t1,clk1,q1,qb1);
+        initial
+        #100 $finish;
+endmodule 
+
+        
+    
+    

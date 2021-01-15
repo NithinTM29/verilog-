@@ -1,0 +1,31 @@
+module fulladder_str (a, b, cin, sum, cout);
+input a, b, cin;
+output sum, cout;
+wire s1,s2,s3;
+xor x1(sum,a,b,cin);
+and a1(s1,a,b);
+and a2(s2,a,cin);
+and a3(s3,b,cin);
+or o1(cout,s1,s2,s3);
+endmodule
+
+module fulladder_str_tb ;
+reg A10,B10,Cin10;
+wire Sum10, Cout10;
+fulladder_str FA1(.a(A10) , .b(B10) , .cin(Cin10) , .sum(Sum10) , .cout(Cout10));
+
+initial 
+ begin
+  A10=0;
+   B10=0;
+   Cin10=0;
+    #100 $finish;
+end
+always #40 A10=~A10;
+always #20 B10=~B10;
+always #10 Cin10=~Cin10;
+always @(A10 or B10 or Cin10)
+
+begin
+
+ $monitor ("At TIME(in ns)=%t , a=%d b=%d cin=%d,sum=%d,cout=%d", $time ,A10,B10,Cin10,Sum10,Cout10);

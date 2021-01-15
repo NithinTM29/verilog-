@@ -1,0 +1,48 @@
+module encoder_wop (I,D);
+input [7:0] I;
+output [2:0] D;
+reg [2:0] D;
+always @(I)
+begin
+ case (I)
+ 8'd1 : D=3'd0;
+ 8'd2 : D=3'd1;
+ 8'd4 : D=3'd2;
+ 8'd8 : D=3'd3;
+ 8'd16 : D=3'd4;
+ 8'd32 : D=3'd5;
+ 8'd64 : D=3'd6;
+ 8'd128 : D=3'd7;
+default: D=3'BZZZ;
+endcase
+end
+endmodule
+module encoder_wop_tb;
+reg [7:0] I;
+
+wire [2:0] D;
+
+encoder_wop uut(
+.D(D),
+.I(I)
+
+);
+initial begin
+// Initialize Inputs
+
+#10 I = 8'b10000000;
+ #10 I = 8'b01000000;
+ #10 I = 8'b00100000;
+ #10 I = 8'b00010000;
+ #10 I= 8'b00001000;
+ #10 I= 8'b00000100;
+ 
+#10 I = 8'b00000010;
+#10 I = 8'b00000001;
+#10;
+
+end
+initial begin
+$monitor("time=",$time,"I=%b:D=%b",I,D);
+end
+endmodule
